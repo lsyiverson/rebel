@@ -1,0 +1,1 @@
+require('./app.jsx')(document.getElementById('root'));
