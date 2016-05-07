@@ -1,7 +1,7 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
-import LoginPage from './page/loginPage.jsx';
-import HomePage from './page/homePage.jsx';
+import LoginPage from './page/loginPage';
+import HomePage from './page/homePage';
 
 export default (
   <Route path='/'>
