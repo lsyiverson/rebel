@@ -1,4 +1,5 @@
-export default {
+module.exports = {
+  LOGIN: 'LOGIN',
   ADD_RULE: 'ADD_RULE',
   UPDATE_RULE: 'UPDATE_RULE',
   REMOVE_RULE: 'REMOVE_RULE',
