@@ -23,7 +23,7 @@ class LoginPage extends React.Component {
           bsStyle='primary'
           onClick={this._onButtonClick.bind(this)}
           active>
-          {`Click ${3 - time} go to Home`}
+          {`Click ${3 - time} time go to Home`}
         </Button>
       </div>
     );

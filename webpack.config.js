@@ -22,17 +22,17 @@ module.exports = {
     loaders: [
       {
         test: /\.scss$/,
-        loader: cssExtractor.extract('style', 'css!sass')
+        loaders: ['react-hot', cssExtractor.extract('style', 'css!sass')]
       },
       {
         test: /\.jsx?$/,
-        loaders: [ 'babel' ],
+        loaders: ['react-hot', 'babel' ],
         exclude: /node_modules/,
         include: __dirname
       },
       {
         test: /\.html?$/,
-        loader: htmlExtractor.extract('html')
+        loaders: ['react-hot', htmlExtractor.extract('html')]
       }
     ]
   },
