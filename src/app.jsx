@@ -5,7 +5,7 @@ import routes from './routes';
 import {Router, hashHistory} from 'react-router';
 import configureStore from './store/configureStore';
 
-const store = configureStore({});
+const store = configureStore();
 
 module.exports = function(rootNode) {
   return ReactDOM.render(
