@@ -29,7 +29,7 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    rulesList: state.getRulesList.rulesList
+    rulesList: state.rulesList
   }
 }
 

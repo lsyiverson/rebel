@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 import ruleOps from './ruleOps';
 import login from './login';
-import getRulesList from './getRulesList';
+import rulesList from './rulesList';
 
 const rootReducer = combineReducers({
   ruleOps,
   login,
-  getRulesList
+  rulesList
 });
 
 export default rootReducer;
