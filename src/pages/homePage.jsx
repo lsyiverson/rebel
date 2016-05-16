@@ -24,9 +24,19 @@ class HomePage extends React.Component {
           </Navbar.Header>
         </Navbar>
 
-        <Panel header={<h3>股票交易订单列表</h3>}>
+        <Panel header={<h3>激活订单列表</h3>}>
           <RulesList
-            rulesList={rulesList}/>
+            rulesList={_.filter(rulesList, {status: 'ACTIVE'})}/>
+        </Panel>
+
+        <Panel header={<h3>未激活订单列表</h3>}>
+          <RulesList
+            rulesList={_.filter(rulesList, {status: 'INACTIVE'})}/>
+        </Panel>
+
+        <Panel header={<h3>已完成订单列表</h3>}>
+          <RulesList
+            rulesList={_.filter(rulesList, {status: 'DONE'})}/>
         </Panel>
       </div>
     );
