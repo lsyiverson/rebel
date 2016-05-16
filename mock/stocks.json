@@ -1,0 +1,13 @@
+[
+  {
+    "method": "get",
+    "url": "/stocks/:pinyin",
+    "response": [
+      {
+        "id": 1828,
+        "name": "久其软件",
+        "code": "sz002279"
+      }
+    ]
+  }
+]

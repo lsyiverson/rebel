@@ -1,0 +1,118 @@
+[
+  {
+    "method": "get",
+    "url": "/orders",
+    "response": [
+      {
+        "id": 2,
+        "stock": {
+          "id": 1828,
+          "name": "久其软件",
+          "code": "sz002279"
+        },
+        "operation": "BUY",
+        "price": 45,
+        "volumn": 300,
+        "offset": 0.3,
+        "clientId": "tim-PC",
+        "instant": false,
+        "status": "ACTIVE",
+        "createTime": 1462204246000,
+        "lastUpdateTime": 1462265436000,
+        "img1": null,
+        "img2": null
+      },
+      {
+        "id": 3,
+        "stock": {
+          "id": 1828,
+          "name": "久其软件",
+          "code": "sz002279"
+        },
+        "operation": "SELL",
+        "price": 45,
+        "volumn": 300,
+        "offset": 0.3,
+        "clientId": "tim-PC",
+        "instant": false,
+        "status": "INACTIVE",
+        "createTime": 1462204246000,
+        "lastUpdateTime": 1462265436000,
+        "img1": null,
+        "img2": null
+      },
+      {
+        "id": 4,
+        "stock": {
+          "id": 1828,
+          "name": "久其软件",
+          "code": "sz002279"
+        },
+        "operation": "SELL",
+        "price": 45,
+        "volumn": 300,
+        "offset": 0.3,
+        "clientId": "tim-PC",
+        "instant": false,
+        "status": "DONE",
+        "createTime": 1462204246000,
+        "lastUpdateTime": 1462265436000,
+        "img1": null,
+        "img2": null
+      }
+    ]
+  },
+  {
+    "method": "put",
+    "url": "/orders",
+    "response":
+      {
+        "id": 2,
+        "stock": {
+          "id": 1828,
+          "name": "久其软件",
+          "code": "sz002279"
+        },
+        "operation": "BUY",
+        "price": 45,
+        "volumn": 300,
+        "offset": 0.3,
+        "clientId": "tim-PC",
+        "instant": false,
+        "status": "ACTIVE",
+        "createTime": 1462204246000,
+        "lastUpdateTime": 1462265436000,
+        "img1": null,
+        "img2": null
+      }
+  },
+  {
+    "method": "delete",
+    "url": "/orders/:id",
+    "response": ""
+  },
+  {
+    "method": "post",
+    "url": "/orders",
+    "response":
+    {
+      "id": 2,
+      "stock": {
+        "id": 1828,
+        "name": "久其软件",
+        "code": "sz002279"
+      },
+      "operation": "BUY",
+      "price": 45,
+      "volumn": 300,
+      "offset": 0.3,
+      "clientId": "tim-PC",
+      "instant": false,
+      "status": "ACTIVE",
+      "createTime": 1462204246000,
+      "lastUpdateTime": 1462265436000,
+      "img1": null,
+      "img2": null
+    }
+  }
+]
