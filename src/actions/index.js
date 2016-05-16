@@ -13,7 +13,7 @@ export function getRulesList(request) {
   return function(dispatch) {
     dispatch(getRulesListRequest(request));
 
-    return fetch('http://localhost:10086/rules')
+    return fetch('http://localhost:10086/orders')
       .then(response=> {return response.json()})
       .then(response => dispatch(getRulesListCompleted(request, response)));
   }
