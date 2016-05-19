@@ -13,6 +13,7 @@ module.exports = {
       './src/styles.scss'
     ]
   },
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -21,7 +22,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         loader: cssExtractor.extract('style', 'css!sass')
       },
       {

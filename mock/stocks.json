@@ -5,8 +5,21 @@
     "response": [
       {
         "id": 1828,
+        "abbr": "jqrj",
         "name": "久其软件",
         "code": "sz002279"
+      },
+      {
+        "id": 1836,
+        "abbr": "hdgf",
+        "name": "宏达股份",
+        "code": "sh600331"
+      },
+      {
+        "id": 1845,
+        "abbr": "zgzg",
+        "name": "中国重工",
+        "code": "sh601989"
       }
     ]
   }
