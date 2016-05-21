@@ -1,7 +1,7 @@
 [
   {
     "method": "get",
-    "url": "/stocks/:pinyin",
+    "url": "/api/stocks/:pinyin",
     "response": [
       {
         "id": 1828,
