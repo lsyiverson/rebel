@@ -4,7 +4,7 @@ import {Navbar, Panel} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 import RulesList from '../components/rulesList';
-import StockInput from '../components/stockInput';
+import RuleCreator from '../components/ruleCreator';
 import {getRulesList} from '../actions';
 
 class HomePage extends React.Component {
@@ -25,9 +25,7 @@ class HomePage extends React.Component {
           </Navbar.Header>
         </Navbar>
 
-        <Panel header={<h3>创建订单</h3>}>
-          <StockInput onStockSelected={stock=> { console.log(stock)}}/>
-        </Panel>
+        <RuleCreator />
 
         <Panel header={<h3>激活订单列表</h3>}>
           <RulesList

@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 
-import {LOGIN, GET_RULES_LIST, QUERY_STOCK} from '../constants/actionType';
+import {LOGIN, GET_RULES_LIST, QUERY_STOCK, CLEAR_STOCK} from '../constants/actionType';
 import url from 'url';
 const {GET_RULES_LIST_REQUEST, GET_RULES_LIST_COMPLETED, GET_RULES_LIST_FAILED} = GET_RULES_LIST;
 const {QUERY_STOCK_REQUEST, QUERY_STOCK_COMPLETED, QUERY_STOCK_FAILED} = QUERY_STOCK;
@@ -60,5 +60,11 @@ function queryStocksCompleted(stockShortName, response) {
     type: QUERY_STOCK_COMPLETED,
     stockShortName: stockShortName,
     response: response
+  }
+}
+
+export function clearStocks() {
+  return {
+    type: CLEAR_STOCK
   }
 }

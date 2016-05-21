@@ -1,4 +1,4 @@
-import {QUERY_STOCK} from '../constants/actionType';
+import {QUERY_STOCK, CLEAR_STOCK} from '../constants/actionType';
 const {QUERY_STOCK_REQUEST, QUERY_STOCK_COMPLETED, QUERY_STOCK_FAILED} = QUERY_STOCK;
 
 export default function stocks(state = [], action) {
@@ -7,6 +7,8 @@ export default function stocks(state = [], action) {
       return state;
     case QUERY_STOCK_COMPLETED:
       return action.response;
+    case CLEAR_STOCK:
+      return [];
     default:
       return state;
   }

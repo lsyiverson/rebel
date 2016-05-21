@@ -5,9 +5,14 @@ import {connect} from 'react-redux';
 import {queryStocks} from '../actions';
 
 class StockInput extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (_.isEmpty(nextProps.stocks)) {
+      this.refs.stockInput.refs.inner.setState({selected: [], text: ''});
+    }
+  }
   _onTextChange(text) {
     const {dispatch} = this.props;
-    return dispatch(queryStocks(text));
+    return !_.isEmpty(text) && dispatch(queryStocks(text));
   }
   render() {
     const {stocks, onStockSelected} = this.props;
@@ -18,7 +23,8 @@ class StockInput extends React.Component {
 
     return (
       <Typeahead
-        onInputChange={_.debounce(this._onTextChange.bind(this), 500)}
+        ref='stockInput'
+        onInputChange={_.debounce(this._onTextChange.bind(this), 200)}
         onChange={onStockSelected}
         options={stockInfos}
         labelKey={'displayName'}
