@@ -1,9 +1,12 @@
 import 'whatwg-fetch';
-
-import {LOGIN, GET_RULES_LIST, QUERY_STOCK, CLEAR_STOCK} from '../constants/actionType';
 import url from 'url';
+
+import {LOGIN, GET_RULES_LIST, QUERY_STOCK, CLEAR_STOCK, CREATE_RULE} from '../constants/actionType';
+import {transformToCreateRuleApiRequest} from '../helpers/apiRequestHelper';
+
 const {GET_RULES_LIST_REQUEST, GET_RULES_LIST_COMPLETED, GET_RULES_LIST_FAILED} = GET_RULES_LIST;
 const {QUERY_STOCK_REQUEST, QUERY_STOCK_COMPLETED, QUERY_STOCK_FAILED} = QUERY_STOCK;
+const {CREATE_RULE_REQUEST, CREATE_RULE_COMPLETED, CREATE_RULE_FAILED} = CREATE_RULE;
 
 const domain = 'http://localhost:10086';
 
@@ -66,5 +69,33 @@ function queryStocksCompleted(stockShortName, response) {
 export function clearStocks() {
   return {
     type: CLEAR_STOCK
+  }
+}
+
+export function createRule(formData) {
+  const request = transformToCreateRuleApiRequest(formData);
+  return function(dispatch) {
+    dispatch(createRuleRequest(request));
+    
+    return fetch(url.resolve(domain, `orders`), {
+      method: 'POST',
+      body: JSON.stringify(request)
+    }).then(responseStream => responseStream.json())
+      .then(response => dispatch(createRuleCompleted(request, response)))
+  }
+}
+
+function createRuleRequest(apiRequest) {
+  return {
+    type: CREATE_RULE_REQUEST,
+    request: apiRequest
+  }
+}
+
+function createRuleCompleted(request, response) {
+  return {
+    type: CREATE_RULE_COMPLETED,
+    request: request,
+    response: response
   }
 }

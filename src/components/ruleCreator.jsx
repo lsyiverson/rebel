@@ -3,25 +3,36 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Panel, Form, FormControl, Table, Button} from 'react-bootstrap';
 
-import {clearStocks} from '../actions';
+import {clearStocks, createRule} from '../actions';
 import StockInput from './stockInput';
+import operationType from '../constants/operationType';
 
 class RuleCreator extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this._getInitialState();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isCreateSuccess) {
+      this._onCancel();
+    }
+  }
+
+  _getInitialState() {
+    return {
       stock: null,
       formData: {
         operation: 'BUY',
         offset: '0.3',
         instant: 'false'
       }
-    };
+    }
   }
 
   _onStockSelected(selectedStocks) {
     const stock = _.first(selectedStocks);
-    const formData = _.merge({}, this.state.formData, {stockCode: stock.code, stockName: stock.name});
+    const formData = _.merge({}, this.state.formData, {stockId: stock.id, stockCode: stock.code, stockName: stock.name});
     this.setState({
       stock: stock,
       formData: formData
@@ -30,13 +41,11 @@ class RuleCreator extends React.Component {
 
   _onCancel() {
     this.props.dispatch(clearStocks());
-    this.setState({
-      stock: null
-    });
+    this.setState(this._getInitialState());
   }
 
   _onSubmit() {
-    console.log(this.state.formData);
+    this.props.dispatch(createRule(this.state.formData))
   }
 
   _getFeildProps(fieldName) {
@@ -52,7 +61,6 @@ class RuleCreator extends React.Component {
 
   render() {
     const {stock} = this.state;
-
     return (
       <Panel header={<h3>创建订单</h3>}>
         <StockInput onStockSelected={this._onStockSelected.bind(this)}/>
@@ -82,8 +90,8 @@ class RuleCreator extends React.Component {
                   </td>
                   <td>
                     <FormControl {...this._getFeildProps('operation')} componentClass='select'>
-                      <option value='BUY'>买入</option>
-                      <option value='SELL'>卖出</option>
+                      <option value='BUY'>{operationType.BUY}</option>
+                      <option value='SELL'>{operationType.SELL}</option>
                     </FormControl>
                   </td>
                   <td>
@@ -121,4 +129,10 @@ class RuleCreator extends React.Component {
   }
 }
 
-export default connect()(RuleCreator);
+function mapStateToProps(state) {
+  return {
+    isCreateSuccess: !_.isEmpty(state.createRule)
+  };
+}
+
+export default connect(mapStateToProps)(RuleCreator);
