@@ -19,7 +19,6 @@ class RulesList extends React.Component {
           <th>价格</th>
           <th>数量</th>
           <th>价格偏移</th>
-          <th>客户端ID</th>
           <th>是否立即执行</th>
           <th>状态</th>
         </tr>
@@ -35,7 +34,6 @@ class RulesList extends React.Component {
                 <td>{formatCurrency(rule.price)}</td>
                 <td>{rule.volumn}</td>
                 <td>{formatCurrency(rule.offset)}</td>
-                <td>{rule.clientId}</td>
                 <td>{rule.instant ? '是' : '否'}</td>
                 <td>{statusType[rule.status]}</td>
               </tr>
