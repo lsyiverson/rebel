@@ -40,7 +40,15 @@ module.exports = {
   plugins: [
     cssExtractor,
     htmlExtractor,
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"'
+    })
   ],
   resolve: {
     extensions: ['', '.js', '.jsx', '.scss'],

@@ -8,7 +8,7 @@ const {GET_RULES_LIST_REQUEST, GET_RULES_LIST_COMPLETED, GET_RULES_LIST_FAILED} 
 const {QUERY_STOCK_REQUEST, QUERY_STOCK_COMPLETED, QUERY_STOCK_FAILED} = QUERY_STOCK;
 const {CREATE_RULE_REQUEST, CREATE_RULE_COMPLETED, CREATE_RULE_FAILED} = CREATE_RULE;
 
-const domain = 'http://localhost:10086';
+const domain = 'http://localhost:8080';
 
 export function login() {
   return {
