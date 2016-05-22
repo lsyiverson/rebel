@@ -64,6 +64,11 @@
   },
   {
     "method": "put",
+    "url": "/api/orders/:id/:operate",
+    "response": ""
+  },
+  {
+    "method": "put",
     "url": "/api/orders",
     "response":
       {
@@ -114,10 +119,5 @@
       "img1": null,
       "img2": null
     }
-  },
-  {
-    "method": "put",
-    "url": "api/orders/:id/:operate",
-    "response": ""
   }
 ]
