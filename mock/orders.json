@@ -114,5 +114,10 @@
       "img1": null,
       "img2": null
     }
+  },
+  {
+    "method": "put",
+    "url": "api/orders/:id/:operate",
+    "response": ""
   }
 ]

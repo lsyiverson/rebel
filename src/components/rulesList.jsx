@@ -2,9 +2,7 @@ import React, {PropTypes} from 'react';
 import {Table} from 'react-bootstrap';
 import _ from 'lodash';
 
-import operationType from '../constants/operationType';
-import statusType from '../constants/statusType';
-import {formatCurrency} from '../helpers/currencyHelper';
+import RuleItem from './ruleItem';
 
 class RulesList extends React.Component {
   render() {
@@ -26,18 +24,7 @@ class RulesList extends React.Component {
         <tbody>
         {
           _.map(rulesList, (rule, idx) => {
-            return (
-              <tr key={idx}>
-                <td>{rule.stock.code}</td>
-                <td>{rule.stock.name}</td>
-                <td>{operationType[rule.operation]}</td>
-                <td>{formatCurrency(rule.price)}</td>
-                <td>{rule.volumn}</td>
-                <td>{formatCurrency(rule.offset)}</td>
-                <td>{rule.instant ? '是' : '否'}</td>
-                <td>{statusType[rule.status]}</td>
-              </tr>
-            )
+            return <RuleItem key={idx} rule={rule}/>
           })
         }
         </tbody>
