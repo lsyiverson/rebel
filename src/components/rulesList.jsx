@@ -3,10 +3,11 @@ import {Table} from 'react-bootstrap';
 import _ from 'lodash';
 
 import RuleItem from './ruleItem';
+import statusType from '../constants/statusType';
 
 class RulesList extends React.Component {
   render() {
-    const {rulesList} = this.props;
+    const {rulesList, ruleStatus} = this.props;
     return (
       <Table striped bordered condensed responsive>
         <thead>
@@ -19,12 +20,13 @@ class RulesList extends React.Component {
           <th>价格偏移</th>
           <th>是否立即执行</th>
           <th>状态</th>
+          <th>操作</th>
         </tr>
         </thead>
         <tbody>
         {
           _.map(rulesList, (rule, idx) => {
-            return <RuleItem key={idx} rule={rule}/>
+            return <RuleItem key={idx} rule={rule} ruleStatus={ruleStatus}/>
           })
         }
         </tbody>
@@ -37,7 +39,8 @@ RulesList.defaultProps = {
 };
 
 RulesList.propTypes = {
-  rulesList: PropTypes.array.isRequired
+  rulesList: PropTypes.array.isRequired,
+  ruleStatus: PropTypes.oneOf(_.values(statusType)).isRequired
 };
 
 export default RulesList;

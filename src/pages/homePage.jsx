@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import RulesList from '../components/rulesList';
 import RuleCreator from '../components/ruleCreator';
 import {getRulesList} from '../actions';
+import statusType from '../constants/statusType';
 
 class HomePage extends React.Component {
   componentDidMount() {
@@ -29,17 +30,20 @@ class HomePage extends React.Component {
 
         <Panel header={<h3>激活订单列表</h3>}>
           <RulesList
-            rulesList={_.filter(rulesList, {status: 'ACTIVE'})}/>
+            rulesList={_.filter(rulesList, {status: 'ACTIVE'})}
+            ruleStatus={statusType.ACTIVE}/>
         </Panel>
 
         <Panel header={<h3>未激活订单列表</h3>}>
           <RulesList
-            rulesList={_.filter(rulesList, {status: 'INACTIVE'})}/>
+            rulesList={_.filter(rulesList, {status: 'INACTIVE'})}
+            ruleStatus={statusType.INACTIVE}/>
         </Panel>
 
         <Panel header={<h3>已完成订单列表</h3>}>
           <RulesList
-            rulesList={_.filter(rulesList, {status: 'DONE'})}/>
+            rulesList={_.filter(rulesList, {status: 'DONE'})}
+            ruleStatus={statusType.DONE}/>
         </Panel>
       </div>
     );
