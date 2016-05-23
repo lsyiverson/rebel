@@ -8,6 +8,6 @@ export default function createRule(state = {}, action) {
     case CREATE_RULE_COMPLETED:
       return action.response;
     default:
-      return state;
+      return {};
   }
 }

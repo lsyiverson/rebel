@@ -15,6 +15,7 @@ class RuleCreator extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isCreateSuccess) {
+      this.props.dispatch(getRulesList('request'));
       this._onCancel();
       this.setState({
         showDialog: true

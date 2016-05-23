@@ -14,6 +14,6 @@ export default function ruleStatus(state = {}, action) {
         result: operationResult.SUCCESS
       };
     default:
-      return state;
+      return {};
   }
 }

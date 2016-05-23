@@ -75,7 +75,6 @@ function mapStateToProps(state, ownProps) {
   let updateResult = '';
   if (state.ruleStatus.ruleId === ownProps.rule.id) {
     updateResult = state.ruleStatus.result;
-    state.ruleStatus = {};
   }
   return {updateResult: updateResult};
 }
