@@ -68,8 +68,8 @@
     "response": ""
   },
   {
-    "method": "put",
-    "url": "/api/orders",
+    "method": "post",
+    "url": "/api/orders/:id",
     "response":
       {
         "id": 2,

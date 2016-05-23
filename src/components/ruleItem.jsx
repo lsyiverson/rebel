@@ -1,41 +1,112 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
-import {Button} from 'react-bootstrap';
+import {Button, FormControl} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 import operationType from '../constants/operationType';
 import statusType from '../constants/statusType';
 import {formatCurrency} from '../helpers/currencyHelper';
-import {updateRuleStatus, getRulesList, deleteRule} from '../actions';
+import {updateRuleStatus, getRulesList, deleteRule, editRule} from '../actions';
 import operationResult from '../constants/operationResult';
 
 class RuleItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editMode: false,
+      formData: this._initialFormData(props)
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (_.isEqual(nextProps.operationResult, operationResult.SUCCESS)) {
       this.props.dispatch(getRulesList('request'));
     }
+
+    if (!_.isEmpty(nextProps.ruleAfterEdit)) {
+      this.props.dispatch(getRulesList('request'));
+    }
+
+    if (!_.isEqual(nextProps.rule, this.props.rule)) {
+      this.setState({formData: this._initialFormData(nextProps)});
+    }
+  }
+
+  _initialFormData(props) {
+    const {rule} = props;
+    return {
+      id: rule.id,
+      stockId: rule.stock.id,
+      operation: rule.operation.toString(),
+      price: rule.price.toString(),
+      volumn: rule.volumn.toString(),
+      offset: rule.offset.toString(),
+      instant: rule.instant.toString()
+    }
+  }
+
+  _getFeildProps(fieldName) {
+    return {
+      id: fieldName,
+      onChange: e=> {
+        this.state.formData[fieldName] = e.target.value;
+        this.setState(this.state);
+      },
+      defaultValue: this.state.formData[fieldName]
+    }
+  }
+
+  _toggleEditMode() {
+    this.setState({
+      editMode: !this.state.editMode,
+      formData: this._initialFormData(this.props)
+    });
   }
 
   _renderButtons(ruleStatus) {
     const {rule: {id}, dispatch} = this.props;
+    const {editMode, formData} = this.state;
+
     switch (ruleStatus) {
       case statusType.ACTIVE:
-        return (
+        return editMode
+          ? (
           <div>
-            <Button bsStyle='warning' onClick={()=> {dispatch(updateRuleStatus(id, 'deactive'))}}>取消激活</Button>
+            <Button bsStyle='link' onClick={()=> {
+            this.setState({editMode: false});
+            dispatch(editRule(formData));
+            }}>确定</Button>
+            <Button bsStyle='link' onClick={this._toggleEditMode.bind(this)}>取消</Button>
+          </div>
+        )
+          : (
+          <div>
+            <Button bsStyle='link' onClick={()=> {dispatch(updateRuleStatus(id, 'deactive'))}}>取消激活</Button>
+            <Button bsStyle='link' onClick={this._toggleEditMode.bind(this)}>编辑</Button>
           </div>
         );
       case statusType.INACTIVE:
-        return (
+        return editMode
+          ? (
           <div>
-            <Button bsStyle='primary' onClick={()=> {dispatch(updateRuleStatus(id, 'active'))}}>激活</Button>
+            <Button bsStyle='link' onClick={()=> {
+            this.setState({editMode: false});
+            dispatch(editRule(formData));
+            }}>确定</Button>
+            <Button bsStyle='link' onClick={this._toggleEditMode.bind(this)}>取消</Button>
+          </div>
+        )
+          : (
+          <div>
+            <Button bsStyle='link' onClick={()=> {dispatch(updateRuleStatus(id, 'active'))}}>激活</Button>
+            <Button bsStyle='link' onClick={this._toggleEditMode.bind(this)}>编辑</Button>
+            <Button bsStyle='link' onClick={()=> {dispatch(deleteRule(id))}}>删除</Button>
           </div>
         );
       case statusType.DONE:
         return (
           <div>
-            <Button bsStyle='danger' onClick={()=> {dispatch(deleteRule(id))}}>删除</Button>
+            <Button bsStyle='link' onClick={()=> {dispatch(deleteRule(id))}}>删除</Button>
           </div>
         );
     }
@@ -43,14 +114,33 @@ class RuleItem extends React.Component {
 
   render() {
     const {rule, ruleStatus} = this.props;
+    const {editMode} = this.state;
     return (
-      <tr>
+      <tr className='rule-item'>
         <td>{rule.stock.code}</td>
         <td>{rule.stock.name}</td>
         <td>{operationType[rule.operation]}</td>
-        <td>{formatCurrency(rule.price)}</td>
-        <td>{rule.volumn}</td>
-        <td>{formatCurrency(rule.offset)}</td>
+        <td>
+          {
+            editMode
+              ? <FormControl {...this._getFeildProps('price')} type='number' min='0' step='0.01'/>
+              : formatCurrency(rule.price)
+          }
+        </td>
+        <td>
+          {
+            editMode
+              ? <FormControl {...this._getFeildProps('volumn')} type='number' min='100' step='100'/>
+              : rule.volumn
+          }
+        </td>
+        <td>
+          {
+            editMode
+              ? <FormControl {...this._getFeildProps('offset')} type='number' min='0' step='0.01'/>
+              : formatCurrency(rule.offset)
+          }
+        </td>
         <td>{rule.instant ? '是' : '否'}</td>
         <td>{statusType[rule.status]}</td>
         <td>
@@ -62,7 +152,8 @@ class RuleItem extends React.Component {
 }
 
 RuleItem.defaultProps = {
-  operationResult: ''
+  operationResult: '',
+  ruleAfterEdit: ''
 };
 
 RuleItem.propTypes = {
@@ -73,13 +164,17 @@ RuleItem.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   let operationResult = '';
+  let ruleAfterEdit = {};
   if (state.ruleStatus.ruleId === ownProps.rule.id) {
     operationResult = state.ruleStatus.result;
   }
   if (state.deleteStatus.ruleId === ownProps.rule.id) {
     operationResult = state.deleteStatus.result;
   }
-  return {operationResult: operationResult};
+  if (_.get(state.editResult, 'id') === ownProps.rule.id) {
+    ruleAfterEdit = state.editResult;
+  }
+  return {operationResult: operationResult, ruleAfterEdit: ruleAfterEdit};
 }
 
 export default connect(mapStateToProps)(RuleItem);

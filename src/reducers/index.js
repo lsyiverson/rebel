@@ -6,6 +6,7 @@ import stocks from './stocks';
 import createRule from './createRule';
 import ruleStatus from './updateRuleStatus';
 import deleteStatus from './deleteRule';
+import editResult from './editRule';
 
 const rootReducer = combineReducers({
   ruleOps,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   stocks,
   createRule,
   ruleStatus,
-  deleteStatus
+  deleteStatus,
+  editResult
 });
 
 export default rootReducer;

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Panel, Form, FormControl, Table, Button, Modal} from 'react-bootstrap';
 
-import {clearStocks, createRule} from '../actions';
+import {clearStocks, createRule, getRulesList} from '../actions';
 import StockInput from './stockInput';
 import operationType from '../constants/operationType';
 
