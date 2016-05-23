@@ -1,13 +1,14 @@
 import 'whatwg-fetch';
 import url from 'url';
 
-import {LOGIN, GET_RULES_LIST, QUERY_STOCK, CLEAR_STOCK, CREATE_RULE, UPDATE_RULE_STATUS} from '../constants/actionType';
+import {LOGIN, GET_RULES_LIST, QUERY_STOCK, CLEAR_STOCK, CREATE_RULE, UPDATE_RULE_STATUS, DELETE_RULE} from '../constants/actionType';
 import {transformToCreateRuleApiRequest} from '../helpers/apiRequestHelper';
 
 const {GET_RULES_LIST_REQUEST, GET_RULES_LIST_COMPLETED, GET_RULES_LIST_FAILED} = GET_RULES_LIST;
 const {QUERY_STOCK_REQUEST, QUERY_STOCK_COMPLETED, QUERY_STOCK_FAILED} = QUERY_STOCK;
 const {CREATE_RULE_REQUEST, CREATE_RULE_COMPLETED, CREATE_RULE_FAILED} = CREATE_RULE;
 const {UPDATE_RULE_STATUS_REQUEST, UPDATE_RULE_STATUS_COMPLETED, UPDATE_RULE_STATUS_FAILED} = UPDATE_RULE_STATUS;
+const {DELETE_RULE_REQUEST, DELETE_RULE_COMPLETED, DELETE_RULE_FAILED} = DELETE_RULE;
 
 const domain = 'http://localhost:8080/api/';
 
@@ -130,5 +131,32 @@ function updateRuleStatusCompleted(ruleId, operation) {
     type: UPDATE_RULE_STATUS_COMPLETED,
     ruleId: ruleId,
     operation: operation
+  }
+}
+
+export function deleteRule(ruleId) {
+  return function(dispatch) {
+    dispatch(deleteRuleRequest(ruleId));
+
+    return fetch(url.resolve(domain, `orders/${ruleId}`), {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(dispatch(deleteRuleCompleted(ruleId)));
+  }
+}
+
+function deleteRuleRequest(ruleId) {
+  return {
+    type: DELETE_RULE_REQUEST,
+    ruleId: ruleId
+  }
+}
+
+function deleteRuleCompleted(ruleId) {
+  return {
+    type: DELETE_RULE_COMPLETED,
+    ruleId: ruleId
   }
 }

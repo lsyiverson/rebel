@@ -6,13 +6,13 @@ import {connect} from 'react-redux';
 import operationType from '../constants/operationType';
 import statusType from '../constants/statusType';
 import {formatCurrency} from '../helpers/currencyHelper';
-import {updateRuleStatus, getRulesList} from '../actions';
+import {updateRuleStatus, getRulesList, deleteRule} from '../actions';
 import operationResult from '../constants/operationResult';
 
 class RuleItem extends React.Component {
 
   componentWillReceiveProps(nextProps) {
-    if (_.isEqual(nextProps.updateResult, operationResult.SUCCESS)) {
+    if (_.isEqual(nextProps.operationResult, operationResult.SUCCESS)) {
       this.props.dispatch(getRulesList('request'));
     }
   }
@@ -35,7 +35,7 @@ class RuleItem extends React.Component {
       case statusType.DONE:
         return (
           <div>
-            <Button bsStyle='danger' onClick={()=> {}}>删除</Button>
+            <Button bsStyle='danger' onClick={()=> {dispatch(deleteRule(id))}}>删除</Button>
           </div>
         );
     }
@@ -62,21 +62,24 @@ class RuleItem extends React.Component {
 }
 
 RuleItem.defaultProps = {
-  updateResult: ''
+  operationResult: ''
 };
 
 RuleItem.propTypes = {
   rule: PropTypes.object.isRequired,
   ruleStatus: PropTypes.oneOf(_.values(statusType)).isRequired,
-  updateResult: PropTypes.string
+  operationResult: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
-  let updateResult = '';
+  let operationResult = '';
   if (state.ruleStatus.ruleId === ownProps.rule.id) {
-    updateResult = state.ruleStatus.result;
+    operationResult = state.ruleStatus.result;
   }
-  return {updateResult: updateResult};
+  if (state.deleteStatus.ruleId === ownProps.rule.id) {
+    operationResult = state.deleteStatus.result;
+  }
+  return {operationResult: operationResult};
 }
 
 export default connect(mapStateToProps)(RuleItem);
