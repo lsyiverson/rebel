@@ -128,7 +128,8 @@ export function updateRuleStatus(ruleId, operation) {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(dispatch(updateRuleStatusCompleted(ruleId, operation)));
+    }).then(()=> dispatch(updateRuleStatusCompleted(ruleId, operation)))
+      .then(()=> dispatch(getRulesList('request')));
   }
 }
 
@@ -157,7 +158,8 @@ export function deleteRule(ruleId) {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(dispatch(deleteRuleCompleted(ruleId)));
+    }).then(()=> dispatch(deleteRuleCompleted(ruleId)))
+      .then(()=> dispatch(getRulesList('request')));
   }
 }
 
@@ -187,7 +189,8 @@ export function editRule(formData) {
       },
       body: JSON.stringify(request)
     }).then(responseStream => responseStream.json())
-      .then(response => dispatch(editRuleCompleted(request, response)));
+      .then(response => dispatch(editRuleCompleted(request, response)))
+      .then(()=> dispatch(getRulesList('request')));
   }
 }
 

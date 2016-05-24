@@ -6,8 +6,7 @@ import {connect} from 'react-redux';
 import operationType from '../constants/operationType';
 import statusType from '../constants/statusType';
 import {formatCurrency} from '../helpers/currencyHelper';
-import {updateRuleStatus, getRulesList, deleteRule, editRule} from '../actions';
-import operationResult from '../constants/operationResult';
+import {updateRuleStatus, deleteRule, editRule} from '../actions';
 
 class RuleItem extends React.Component {
   constructor(props) {
@@ -19,14 +18,6 @@ class RuleItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (_.isEqual(nextProps.operationResult, operationResult.SUCCESS)) {
-      this.props.dispatch(getRulesList('request'));
-    }
-
-    if (!_.isEmpty(nextProps.ruleAfterEdit)) {
-      this.props.dispatch(getRulesList('request'));
-    }
-
     if (!_.isEqual(nextProps.rule, this.props.rule)) {
       this.setState({formData: this._initialFormData(nextProps)});
     }
@@ -152,29 +143,11 @@ class RuleItem extends React.Component {
 }
 
 RuleItem.defaultProps = {
-  operationResult: '',
-  ruleAfterEdit: ''
 };
 
 RuleItem.propTypes = {
   rule: PropTypes.object.isRequired,
-  ruleStatus: PropTypes.oneOf(_.values(statusType)).isRequired,
-  operationResult: PropTypes.string
+  ruleStatus: PropTypes.oneOf(_.values(statusType)).isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  let operationResult = '';
-  let ruleAfterEdit = {};
-  if (state.ruleStatus.ruleId === ownProps.rule.id) {
-    operationResult = state.ruleStatus.result;
-  }
-  if (state.deleteStatus.ruleId === ownProps.rule.id) {
-    operationResult = state.deleteStatus.result;
-  }
-  if (_.get(state.editResult, 'id') === ownProps.rule.id) {
-    ruleAfterEdit = state.editResult;
-  }
-  return {operationResult: operationResult, ruleAfterEdit: ruleAfterEdit};
-}
-
-export default connect(mapStateToProps)(RuleItem);
+export default connect()(RuleItem);
